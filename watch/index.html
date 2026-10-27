@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kirby Watch</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="desk">
+    <div class="watch" id="watch">
+      <div class="strap strap-top"></div>
+      <div class="case">
+        <button class="crown" id="crown" title="Corona: siguiente pantalla"></button>
+        <button class="side-btn" id="sideBtn" title="Botón: volver a Kirby"></button>
+        <div class="bezel">
+          <div class="screen" id="screen">
+            <div class="clock" id="clock">--:--</div>
+
+            <!-- 1. Kirby -->
+            <section class="view" data-view="kirby">
+              <div class="kirby-wrap" id="kirbyBtn" role="button" aria-label="Aplastar a Kirby"></div>
+              <div class="caption" id="caption">…</div>
+            </section>
+
+            <!-- 2. Cuidar desde el reloj -->
+            <section class="view" data-view="care">
+              <div class="status-title">Cuidar</div>
+              <div class="care-grid" id="careGrid">
+                <button class="care-btn" data-care="feed"><span>🍎</span>Comer</button>
+                <button class="care-btn" data-care="water"><span>💧</span>Agua</button>
+                <button class="care-btn" data-care="bath"><span>🛁</span>Bañar</button>
+                <button class="care-btn" data-care="sleep" id="sleepBtn"><span>🌙</span>Dormir</button>
+              </div>
+              <div class="food-pick" id="foodPick" hidden>
+                <div class="food-list" id="foodList"></div>
+                <button class="pill small-pill" id="foodBack">← Volver</button>
+              </div>
+              <p class="small" id="careMsg"></p>
+            </section>
+
+            <!-- 3. Estado con imágenes -->
+            <section class="view" data-view="status">
+              <div class="status-title" id="statusTitle">Estado</div>
+              <div class="rings" id="rings"></div>
+            </section>
+
+            <!-- 3. Actividad -->
+            <section class="view" data-view="events">
+              <div class="status-title">Actividad</div>
+              <ul class="events" id="events"></ul>
+            </section>
+
+            <!-- 4. Vincular -->
+            <section class="view" data-view="link">
+              <div class="status-title">⌚ Vincular</div>
+              <p class="small">Código que aparece en la app (⚙️)</p>
+              <input id="codeInput" maxlength="6" placeholder="ABC123" autocomplete="off" />
+              <button class="pill" id="linkBtn">Conectar</button>
+              <p class="small" id="linkMsg"></p>
+            </section>
+
+            <div class="dots" id="dots"></div>
+          </div>
+        </div>
+      </div>
+      <div class="strap strap-bottom"></div>
+    </div>
+    <p class="help">Toca a Kirby para aplastarlo · Desliza o gira la corona para cambiar de pantalla</p>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="config.js"></script>
+  <script src="kirby.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

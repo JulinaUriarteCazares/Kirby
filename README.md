@@ -1,23 +1,37 @@
-# Norte Compass para Wear OS
+# Kirby Pou ⭐
 
-Aplicación nativa para relojes Android/Wear OS. Lee el sensor `TYPE_ROTATION_VECTOR` para actualizar el rumbo en tiempo real y muestra una brújula optimizada para pantalla circular.
+- `supabase/schema.sql`: base de datos con toda la lógica (paso del tiempo, muerte, tienda, armas)
+- `mobile/`: app para celular (Expo Go)
+- `watch/`: app del smartwatch (web, simula un reloj redondo)
 
-## Abrir y ejecutar
+## 1. Base de datos
+Supabase → **SQL Editor** → New query → pega todo `supabase/schema.sql` → **Run**.
+(Se puede volver a correr, pero borra los datos y empieza de cero.)
 
-1. Instala [Android Studio](https://developer.android.com/studio) con Android SDK 35.
-2. Abre esta carpeta (`smartwatch`) como proyecto existente.
-3. Espera a que Gradle sincronice las dependencias.
-4. En el reloj activa **Opciones de desarrollador** y **Depuración por Wi-Fi** (o usa un emulador Wear OS).
-5. Selecciona el reloj como dispositivo y pulsa **Run**.
+## 2. Llaves
+En Supabase → Project Settings → API copia la **Project URL** y la llave **anon / publishable** y pégalas en:
+- `mobile/src/config.js`
+- `watch/config.js`
 
-La aplicación no requiere permisos peligrosos: el sensor de orientación se usa mientras la pantalla de la brújula está activa. Algunos modelos no incluyen magnetómetro; en esos relojes el rumbo puede ser menos preciso o no estar disponible.
+## 3. Celular
+```bash
+cd mobile
+npm install
+npx expo start
+```
+Escanea el QR con **Expo Go**. Adopta un Kirby. En ⚙️ verás el **código** para el reloj.
 
-## Solución de problemas de Gradle
+## 4. Smartwatch
+Sirve la carpeta `watch` con cualquier servidor estático, por ejemplo:
+```bash
+cd watch
+npx serve .
+```
+Abre la URL, ve a la pantalla de vincular y escribe el código.
+- Toca a Kirby: abre la boca, dice "¡Poyo!" y en el celular aparece el aviso.
+- Gira la corona o desliza para ver el estado (hambre, sed, limpieza, tristeza…) y la actividad.
 
-Si Android Studio muestra `Could not load wrapper properties`, verifica que exista el archivo `gradle/wrapper/gradle-wrapper.properties` y vuelve a sincronizar el proyecto desde **File > Sync Project with Gradle Files**.
-
-Este proyecto debe ejecutarse con **JDK 17**. En Android Studio selecciónalo en **File > Settings > Build, Execution, Deployment > Build Tools > Gradle > Gradle JDK**. Si no aparece, instala un JDK 17 y selecciónalo en ese mismo apartado. Después pulsa **File > Sync Project with Gradle Files**.
-
-Si Gradle falla mostrando únicamente una versión como `25.0.3`, está usando JDK 25.
-Instala JDK 17 y selecciónalo como **Gradle JDK**; cambiar el `jvmTarget` del
-código no sustituye el JDK con el que se ejecuta Gradle.
+## Cómo funciona
+- Cada ~15–20 s los clientes llaman `tick_pet`, que baja las barras según el tiempo que pasó (aunque la app esté cerrada).
+- Si pasa mucho tiempo con comida, agua, limpieza o felicidad en 0, pierde salud y **muere**. También muere si usas el 🔪 o la 🔫 desde la Mochila.
+- Al morir puedes reencarnarlo; conserva monedas, ropa y decoración.
